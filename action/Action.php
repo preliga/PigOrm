@@ -11,7 +11,7 @@ namespace library\PigOrm\action;
 
 use library\PigFramework\model\View;
 
-abstract class Action extends \library\Pig\action\Action
+abstract class Action extends \library\PigFramework\action\Action
 {
     final public function init()
     {
