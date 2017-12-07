@@ -7,7 +7,7 @@
  * Time: 22:11
  */
 
-namespace library\Pig\orm;
+namespace library\PigOrm;
 
 abstract class DataTemplate
 {

@@ -7,7 +7,7 @@
  * Time: 22:10
  */
 
-namespace library\Pig\orm;
+namespace library\PigOrm;
 
 use Iterator;
 

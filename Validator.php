@@ -7,7 +7,7 @@
  * Time: 22:12
  */
 
-namespace library\Pig\orm;
+namespace library\PigOrm;
 
 class Validator
 {

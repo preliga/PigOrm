@@ -7,9 +7,9 @@
  * Time: 15:44
  */
 
-namespace library\Pig\orm\action;
+namespace library\PigOrm\action;
 
-use library\Pig\model\View;
+use library\PigFramework\model\View;
 
 abstract class Action extends \library\Pig\action\Action
 {
