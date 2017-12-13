@@ -133,7 +133,7 @@ abstract class DataTemplate
     {
         $select = $this->_getSelect($variable);
 
-        $select->columns(new \Zend_Db_Expr("$typ(" . $this->db->quote($column) . ")"));
+        $select->columns(new \Zend_Db_Expr("$typ(" . $column . ")"));
 
         $this->_setColumns($select);
         $this->_setWhere($select, $where);
@@ -262,7 +262,7 @@ abstract class DataTemplate
                 }
             }
         } else {
-            foreach ($validators[$column] as $validate) {
+            foreach ($validators[$column] ?? [] as $validate) {
                 $result = $validate($record);
 
                 if (!$result['status']) {
