@@ -139,7 +139,7 @@ abstract class DataTemplate
         $this->_setWhere($select, $where);
         $this->_setGroup($select, $group);
 
-        return $this->db->fetchCol($select);
+        return $this->db->fetchOne($select);
     }
 
 
