@@ -61,6 +61,11 @@ class Record
         return $this->record;
     }
 
+    public function empty(): bool
+    {
+        return empty($this->getArray());
+    }
+
     public function isNew(string $table = null): bool
     {
         $key = $this->dataTemplate->getKeyAlias($table);
