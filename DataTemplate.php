@@ -133,13 +133,21 @@ abstract class DataTemplate
     {
         $select = $this->_getSelect($variable);
 
-        $select->columns(new \Zend_Db_Expr("$typ(" . $column . ")"));
+        if (is_array($column)) {
+            $select->columns(new \Zend_Db_Expr("$typ(" . reset($column) . ") AS ". key($column)));
+        } else {
+            $select->columns(new \Zend_Db_Expr("$typ(" . $column . ")"));
+        }
 
         $this->_setColumns($select);
         $this->_setWhere($select, $where);
         $this->_setGroup($select, $group);
 
-        return $this->db->fetchOne($select);
+        if (empty($group)) {
+            return $this->db->fetchOne($select);
+        } else {
+            return $this->db->fetchAll($select);
+        }
     }
 
 
