@@ -129,7 +129,7 @@ abstract class DataTemplate
     }
 
 
-    private function _aggregateFunction(string $typ, $column, $where = null, $group = null, array $variable = [])
+    private function _aggregateFunction(string $typ, $column, $where = null, $group = null, $order = null, array $variable = [])
     {
         $select = $this->_getSelect($variable);
 
@@ -142,6 +142,7 @@ abstract class DataTemplate
         $this->_setColumns($select);
         $this->_setWhere($select, $where);
         $this->_setGroup($select, $group);
+        $this->_setOrder($select, $order);
 
         if (empty($group)) {
             return $this->db->fetchOne($select);
@@ -542,29 +543,29 @@ abstract class DataTemplate
     }
 
 
-    public function count($column, $where = null, $group = null, array $variable = [])
+    public function count($column, $where = null, $group = null, $order = null, array $variable = [])
     {
-        return $this->_aggregateFunction("COUNT", $column, $where, $group, $variable);
+        return $this->_aggregateFunction("COUNT", $column, $where, $group, $order, $variable);
     }
 
-    public function sum($column, $where = null, $group = null, array $variable = [])
+    public function sum($column, $where = null, $group = null, $order = null, array $variable = [])
     {
-        return $this->_aggregateFunction("SUM", $column, $where, $group, $variable);
+        return $this->_aggregateFunction("SUM", $column, $where, $group, $order, $variable);
     }
 
-    public function max($column, $where = null, $group = null, array $variable = [])
+    public function max($column, $where = null, $group = null, $order = null, array $variable = [])
     {
-        return $this->_aggregateFunction("MAX", $column, $where, $group, $variable);
+        return $this->_aggregateFunction("MAX", $column, $where, $group, $order, $variable);
     }
 
-    public function min($column, $where = null, $group = null, array $variable = [])
+    public function min($column, $where = null, $group = null, $order = null, array $variable = [])
     {
-        return $this->_aggregateFunction("MIN", $column, $where, $group, $variable);
+        return $this->_aggregateFunction("MIN", $column, $where, $group, $order, $variable);
     }
 
-    public function avg($column, $where = null, $group = null, array $variable = [])
+    public function avg($column, $where = null, $group = null, $order = null, array $variable = [])
     {
-        return $this->_aggregateFunction("AVG", $column, $where, $group, $variable);
+        return $this->_aggregateFunction("AVG", $column, $where, $group, $order, $variable);
     }
 
 }
