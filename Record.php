@@ -28,6 +28,24 @@ class Record
         $this->record = $record;
     }
 
+    public function __isset($name)
+    {
+        if (array_key_exists($name, $this->record)) {
+            return isset($this->record[$name]);
+        } else {
+            throw new \Exception("Not found property: '$name'");
+        }
+    }
+
+    public function __unset($name)
+    {
+        if (array_key_exists($name, $this->record)) {
+            unset($this->record[$name]);
+        } else {
+            throw new \Exception("Not found property: '$name'");
+        }
+    }
+
     public function __get($name)
     {
         if (array_key_exists($name, $this->record)) {
