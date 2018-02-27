@@ -80,52 +80,58 @@ class DataTemplateManager
 
     public function count(array $params)
     {
-        $column = $params['column'] ?? null;
+
+        $column = json_decode($params['column'] ?? null, true) ?? $params['column'];
         $where = json_decode($params['where'] ?? null, true);
         $group = json_decode($params['group'] ?? null, true);
+        $order = json_decode($params['order'] ?? null, true);
         $variable = json_decode($params['variable'] ?? null, true) ?? [];
 
-        return $this->dataTemplate->count($column, $where, $group, $variable);
+        return $this->dataTemplate->count($column, $where, $group, $order, $variable);
     }
 
     public function sum(array $params)
     {
-        $column = $params['column'] ?? null;
+        $column = json_decode($params['column'] ?? null, true) ?? $params['column'];
         $where = json_decode($params['where'] ?? null, true);
         $group = json_decode($params['group'] ?? null, true);
+        $order = json_decode($params['order'] ?? null, true);
         $variable = json_decode($params['variable'] ?? null, true) ?? [];
 
-        return $this->dataTemplate->sum($column, $where, $group, $variable);
+        return $this->dataTemplate->sum($column, $where, $group, $order, $variable);
     }
 
     public function min(array $params)
     {
-        $column = $params['column'] ?? null;
+        $column = json_decode($params['column'] ?? null, true) ?? $params['column'];
         $where = json_decode($params['where'] ?? null, true);
         $group = json_decode($params['group'] ?? null, true);
+        $order = json_decode($params['order'] ?? null, true);
         $variable = json_decode($params['variable'] ?? null, true) ?? [];
 
-        return $this->dataTemplate->min($column, $where, $group, $variable);
+        return $this->dataTemplate->min($column, $where, $group, $order, $variable);
     }
 
     public function max(array $params)
     {
-        $column = $params['column'] ?? null;
+        $column = json_decode($params['column'] ?? null, true) ?? $params['column'];
         $where = json_decode($params['where'] ?? null, true);
         $group = json_decode($params['group'] ?? null, true);
+        $order = json_decode($params['order'] ?? null, true);
         $variable = json_decode($params['variable'] ?? null, true) ?? [];
 
-        return $this->dataTemplate->max($column, $where, $group, $variable);
+        return $this->dataTemplate->max($column, $where, $group, $order, $variable);
     }
 
     public function avg(array $params)
     {
-        $column = $params['column'] ?? null;
+        $column = json_decode($params['column'] ?? null, true) ?? $params['column'];
         $where = json_decode($params['where'] ?? null, true);
         $group = json_decode($params['group'] ?? null, true);
+        $order = json_decode($params['order'] ?? null, true);
         $variable = json_decode($params['variable'] ?? null, true) ?? [];
 
-        return $this->dataTemplate->avg($column, $where, $group, $variable);
+        return $this->dataTemplate->avg($column, $where, $group, $order, $variable);
     }
 
 
