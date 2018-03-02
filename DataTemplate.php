@@ -251,7 +251,7 @@ abstract class DataTemplate
             }
         }
 
-        return new Record($record, $this);
+        return new Record($record, $this, Record::STATUS_NEW);
     }
 
 
@@ -337,7 +337,9 @@ abstract class DataTemplate
                             $this->db->insert($table, $bind);
                             $key = $this->getKeyAlias($table);
 
-                            $record->$key = $this->db->lastInsertId($table);
+                            if (is_null($record->$key)) {
+                                $record->$key = $this->db->lastInsertId($table);
+                            }
                         } else {
                             throw new \Exception("No rights (PUT) to dataTemplate: " . get_called_class());
                         }
@@ -520,7 +522,7 @@ abstract class DataTemplate
 
         $collection = $this->db->fetchAll($select);
 
-        return $this->beforeOutput(new Collection($collection, $this));
+        return $this->beforeOutput(new Collection($collection, $this, Record::STATUS_OLD));
     }
 
     public function findOne($where = null, $order = null, $group = null, array $variable = []): Record
@@ -529,7 +531,7 @@ abstract class DataTemplate
 
         $record = $this->db->fetchRow($select);
 
-        $collection = $this->beforeOutput(new Collection([!empty($record) ? $record : []], $this));
+        $collection = $this->beforeOutput(new Collection([!empty($record) ? $record : []], $this, Record::STATUS_OLD));
 
         return $collection->current();
     }

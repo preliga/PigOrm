@@ -11,19 +11,29 @@ namespace library\PigOrm;
 
 class Record
 {
+    const STATUS_NEW = 'new';
+    const STATUS_OLD = 'old';
+
     /**
      * @var DataTemplate
      */
     protected $dataTemplate;
 
     /**
+     * @var string
+     */
+    protected $status;
+
+    /**
      * @var array
      */
     protected $record;
 
-    public function __construct(array $record, DataTemplate $dataTemplate)
+    public function __construct(array $record, DataTemplate $dataTemplate, string $status)
     {
         $this->dataTemplate = $dataTemplate;
+
+        $this->status = $status;
 
         $this->record = $record;
     }
@@ -87,15 +97,14 @@ class Record
     public function isNew(string $table = null): bool
     {
         $key = $this->dataTemplate->getKeyAlias($table);
-
-        return is_null($this->$key);
+        return is_null($this->$key) || $this->status === self::STATUS_NEW;
     }
 
 
     public function reload()
     {
         $key = $this->dataTemplate->getKeyAlias();
-
+        
         $this->record = $this->dataTemplate->get($this->$key)->getArray();
     }
 
@@ -121,7 +130,7 @@ class Record
             return $valid;
         } else {
 
-            $collection = new Collection([$this], $this->dataTemplate);
+            $collection = new Collection([$this], $this->dataTemplate, $this->status);
             $this->dataTemplate->beforeSaveCollection($collection, $notTables, $onlyTables);
             $this->dataTemplate->saveCollection($collection, $notTables, $onlyTables);
             $this->dataTemplate->afterSaveCollection($collection, $notTables, $onlyTables);
@@ -136,7 +145,7 @@ class Record
 
     public function delete(array $notTables = null, array $onlyTables = null): array
     {
-        $collection = new Collection([$this], $this->dataTemplate);
+        $collection = new Collection([$this], $this->dataTemplate, $this->status);
 
         $this->dataTemplate->beforeDeleteCollection($collection, $notTables, $onlyTables);
         $this->dataTemplate->deleteCollection($collection, $notTables, $onlyTables);

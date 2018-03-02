@@ -23,20 +23,20 @@ class Collection implements Iterator
      */
     protected $dataTemplate;
 
-    public function __construct($collection, DataTemplate $dataTemplate)
+    public function __construct($collection, DataTemplate $dataTemplate, string $status)
     {
-        $this->collection = $this->_createCollection($collection, $dataTemplate);
+        $this->collection = $this->_createCollection($collection, $dataTemplate, $status);
 
         $this->dataTemplate = $dataTemplate;
     }
 
-    private function _createCollection(array $collection, DataTemplate $dataTemplate): array
+    private function _createCollection(array $collection, DataTemplate $dataTemplate, string $status): array
     {
         $collectionRecord = [];
 
         foreach ($collection as $record) {
             if (is_array($record)) {
-                $collectionRecord[] = new Record($record, $dataTemplate);
+                $collectionRecord[] = new Record($record, $dataTemplate, $status);
             } else {
                 $collectionRecord[] = $record;
             }
