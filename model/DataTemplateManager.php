@@ -20,6 +20,12 @@ class DataTemplateManager
         $this->dataTemplate = $dataTemplate;
     }
 
+    public function __call($name, $arguments)
+    {
+        $params = json_decode($arguments[0]['params'] ?? null, true);
+        $this->dataTemplate->afterCall($name, $params);
+    }
+
     public function find(array $params)
     {
         $where = json_decode($params['where'] ?? null, true);

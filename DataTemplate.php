@@ -21,7 +21,7 @@ abstract class DataTemplate
      */
     protected $db;
 
-    private function __construct()
+    protected function __construct()
     {
         $this->db = $this->getDb();
     }
@@ -568,6 +568,11 @@ abstract class DataTemplate
     public function avg($column, $where = null, $group = null, $order = null, array $variable = [])
     {
         return $this->_aggregateFunction("AVG", $column, $where, $group, $order, $variable);
+    }
+
+    public function afterCall($name, $arguments)
+    {
+
     }
 
 }
