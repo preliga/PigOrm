@@ -28,10 +28,10 @@ abstract class DataTemplate
 
     public static function getInstance(): DataTemplate
     {
-        $class = get_called_class();
+        $class = static::class;
 
         if (empty(self::$instances[$class])) {
-            self::$instances[$class] = new $class();
+            self::$instances[$class] = new static();
         }
 
         return self::$instances[$class];
