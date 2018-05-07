@@ -128,13 +128,19 @@ abstract class DataTemplate
         }
     }
 
+    private function _setLimit(\Zend_Db_Select $select, $limit, $offset)
+    {
+        if (!empty($limit)) {
+            $select->limit($limit, $offset);
+        }
+    }
 
     private function _aggregateFunction(string $typ, $column, $where = null, $group = null, $order = null, array $variable = [])
     {
         $select = $this->_getSelect($variable);
 
         if (is_array($column)) {
-            $select->columns(new \Zend_Db_Expr("$typ(" . reset($column) . ") AS ". key($column)));
+            $select->columns(new \Zend_Db_Expr("$typ(" . reset($column) . ") AS " . key($column)));
         } else {
             $select->columns(new \Zend_Db_Expr("$typ(" . $column . ")"));
         }
@@ -152,7 +158,7 @@ abstract class DataTemplate
     }
 
 
-    private function _find($where = null, $order = null, $group = null, array $variable = []): \Zend_Db_Select
+    private function _find($where = null, $order = null, $group = null, $limit = null, $offset = null, array $variable = []): \Zend_Db_Select
     {
         if (!$this->_permission("GET")) {
             throw new \Exception("No rights (GET) to dataTemplate: " . get_called_class());
@@ -163,6 +169,7 @@ abstract class DataTemplate
         $this->_setWhere($select, $where);
         $this->_setOrder($select, $order);
         $this->_setGroup($select, $group);
+        $this->_setLimit($select, $limit, $offset);
 
         $this->_setColumns($select);
 
@@ -441,7 +448,6 @@ abstract class DataTemplate
     }
 
 
-
     public function beforeDeleteCollection(Collection $collection, array $notTables = null, array $onlyTables = null)
     {
 
@@ -516,9 +522,9 @@ abstract class DataTemplate
         return $this->findOne([$key . ' = ?' => $id], [], $variable);
     }
 
-    public function find($where = null, $order = null, $group = null, array $variable = []): Collection
+    public function find($where = null, $order = null, $group = null, $limit = null, $offset = null, array $variable = []): Collection
     {
-        $select = $this->_find($where, $order, $group, $variable);
+        $select = $this->_find($where, $order, $group, $limit, $offset, $variable);
 
         $collection = $this->db->fetchAll($select);
 

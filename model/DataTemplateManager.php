@@ -31,9 +31,11 @@ class DataTemplateManager
         $where = json_decode($params['where'] ?? null, true);
         $group = json_decode($params['group'] ?? null, true);
         $order = json_decode($params['order'] ?? null, true);
+        $limit = json_decode($params['limit'] ?? null, true);
+        $offset = json_decode($params['offset'] ?? null, true);
         $variable = json_decode($params['variable'] ?? null, true) ?? [];
 
-        return $this->dataTemplate->find($where, $group, $order, $variable)->getArray();
+        return $this->dataTemplate->find($where, $group, $order, $limit, $offset, $variable)->getArray();
     }
 
     public function findOne(array $params)
